@@ -27,6 +27,7 @@ module Format
   , helpText
   , initialText
   , versionText
+  , version
   , restartText
   , errorNonTypeableText
   , errorTypeConstructors
@@ -89,7 +90,6 @@ decolor = appEndo $ mconcat $ map (Endo . removeString)
   , formatError
   , end
   ]
-
 
 -- | Unknown command error message
 errorUnknownCommand :: String
@@ -165,4 +165,4 @@ versionText = "Mikrokosmos, version " ++ version
 
 -- | Version
 version :: String
-version = "0.8.0"
+version = "0.8.1"

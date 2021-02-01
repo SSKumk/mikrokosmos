@@ -17,12 +17,14 @@ module Environment
   -- * Reading the environment
   , getVerbose
   , getColor
+  , getPlain
+  , getSilent
   , getSki
   , getTypes
   , getExpressionName
   , getStrategy
   , getTopo
-  
+
   -- * Modifying the environment
   , addBind
   , changeColor
@@ -31,6 +33,9 @@ module Environment
   , changeTypes
   , changeStrategy
   , changeTopo
+  , changePlain
+  , changeSilent
+  
 
   -- * Filenames and Modulenames
   , Filename
@@ -54,11 +59,27 @@ data Environment = Environment
   , loadedFiles :: [Filename]
   , verbose :: Bool
   , color :: Bool
+  , plain :: Bool
+  , silent :: Bool 
   , skioutput :: Bool
   , types :: Bool
   , strategy :: String
   , topo :: Bool
   }
+  
+-- !!!!
+instance Show Environment where
+  show e  = "Environment { " ++
+            "loadedFiles = " ++ show (loadedFiles e) ++ ", " ++
+            "verbose = " ++ show (verbose e) ++ ", " ++
+            "color = " ++ show (color e) ++ ", " ++
+            "plain = " ++ show (plain e) ++ ", " ++
+            "silent = " ++ show (silent e) ++ ", " ++
+            "skioutput = " ++ show (skioutput e) ++ ", " ++
+            "types = " ++ show (types e) ++ ", " ++
+            "strategy = " ++ show (strategy e) ++ ", " ++
+            "topo = " ++ show (topo e) ++ " }"
+-- !!!!
 
 -- | Default environment for the interpreter.
 defaultEnv :: Environment
@@ -67,6 +88,8 @@ defaultEnv = Environment
   , loadedFiles = []
   , verbose     = False
   , color       = True
+  , plain       = False
+  , silent      = False
   , skioutput   = False
   , types       = False
   , strategy    = "full"
@@ -74,8 +97,10 @@ defaultEnv = Environment
   }
 
 -- | Get current settings
-getColor, getVerbose, getSki, getTypes, getTopo :: Environment -> Bool
+getColor, getVerbose, getSki, getTypes, getTopo, getPlain, getSilent :: Environment -> Bool
 getColor    = color
+getPlain    = plain
+getSilent   = silent
 getVerbose  = verbose
 getSki      = skioutput
 getTypes    = types
@@ -115,6 +140,14 @@ changeStrategy options setting = options {strategy = setting}
 
 changeTopo :: Environment -> Bool -> Environment
 changeTopo options setting = options {topo = setting}
+
+changePlain :: Environment -> Bool -> Environment
+changePlain env setting = env { plain = setting }
+
+changeSilent :: Environment -> Bool -> Environment
+changeSilent env setting = env { silent = setting }
+
+
 
 -- | Given an expression, returns its name if it is bounded to any.
 getExpressionName :: Environment -> Exp -> Maybe String

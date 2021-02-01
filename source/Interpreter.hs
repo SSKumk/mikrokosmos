@@ -21,7 +21,6 @@ module Interpreter
   )
 where
 
-import           Control.Applicative           ((<$>), (<*>))
 import           Control.Monad.State.Lazy      
 import           Text.ParserCombinators.Parsec hiding (State)
 import           Data.Char
@@ -79,7 +78,7 @@ data Action = Bind (String, NamedLambda)     -- ^ bind a name to an expression
             | SetTypes Bool                  -- ^ changes type configuration
             | SetStrategy String             -- ^ changes reduction strategy
             | SetTopo Bool
-
+  deriving (Show)
               
 -- | Executes a language action. Given a context and an action, returns
 -- the new context after the action and a text output.
