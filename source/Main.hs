@@ -124,6 +124,7 @@ outputActions environment output = do
     formatPlain = 
       concatMap (\ch -> case ch of
         'λ' -> "\\"
+        '→' -> "->"
         '⇒' -> "=>"
         _ -> [ch]) 
 

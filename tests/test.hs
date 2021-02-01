@@ -134,6 +134,6 @@ goldenTests = testGroup "Golden tests (tasty-golden)"
   [ goldenVsFile "Main golden test"
       "tests/goldenfile.golden"
       "tests/testingfile"
-      (callCommand "mikrokosmos tests/testing.mkr > tests/testingfile")
+      (callCommand "mikrokosmos --exec tests/testing.mkr --no-libs > tests/testingfile")
   ]
 
